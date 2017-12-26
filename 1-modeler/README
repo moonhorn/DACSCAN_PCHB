@@ -1,0 +1,34 @@
+This is README file for Algorithm PA#2
+Author: Ting-Yu Shen B00901006
+Date: 2015/03/31
+=====
+SYNOPSIS:
+
+./WorkerAnt ¡V[GD|DP] <input_file_name> <output_file_name>
+
+This program supports three different algorithm: dynamic programing and Greedy algorithm.
+=====
+DIRECTORY:
+
+  bin/		executable binary
+  doc/		reports
+  inputs/	input files
+  outputs/	output files
+  lib/		library
+  src/ 		source C++ codes
+  
+======
+HOW TO CIMPILE:
+
+	cd PA2/
+	make
+
+======
+HOW TO RUN:
+
+	cd bin/
+	./bin/WorkerAnt ¡V[GD|DP] <input_file_name> <output_file_name>
+	For example,
+	./bin/WorkerAnt ¡VGD inputs/case3.in outputs/case3.gd.out
+======
+OTHER NOTICE:

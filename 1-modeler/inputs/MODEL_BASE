@@ -1,0 +1,115 @@
+//Model
+AND2 2
+AND A1_t A2_t O_t ;
+OR A1_f A2_f O_f ;
+;
+OR2 2
+OR A1_t A2_t O_t ;
+AND A1_f A2_f O_f ;
+;
+NAND2 2
+AND A1_t A2_t O_f ;
+OR A1_f A2_f O_t ;
+;
+NOR2 2
+AND A1_f A2_f O_t ;
+OR A1_t A2_t O_f ;
+;
+AND3 3
+AND A1_t A2_t A3_t O_t ;
+OR A1_f A2_f A3_f O_f ;
+;
+OR3 3
+OR A1_t A2_t A3_t O_t ;
+AND A1_f A2_f A3_f O_f ;
+;
+NAND3 3
+AND A1_t A2_t A3_t O_f ;
+OR A1_f A2_f A3_f O_t ;
+;
+NOR3 3
+AND A1_f A2_f A3_f O_t ;
+OR A1_t A2_t A3_t O_f ;
+;
+AND4 4
+AND A1_t A2_t A3_t A4_t O_t ;
+OR A1_f A2_f A3_f A4_f O_f ;
+;
+OR4 4
+OR A1_t A2_t A3_t A4_t O_t ;
+AND A1_f A2_f A3_f A4_f O_f ;
+;
+NAND4 4
+AND A1_t A2_t A3_t A4_t O_f ;
+OR A1_f A2_f A3_f A4_f O_t ;
+;
+NOR4 4
+AND A1_f A2_f A3_f A4_f O_t ;
+OR A1_t A2_t A3_t A4_t O_f ;
+;
+XNOR2 2
+AND A1_f A2_f temp1 ;
+AND A1_t A2_t temp2 ;
+AND A1_t A2_f temp3 ;
+AND A1_f A2_t temp4 ;
+OR temp1 temp2 O_t ;
+OR temp3 temp4 O_f ;
+;
+XOR2 2
+AND A1_f A2_f temp1 ;
+AND A1_t A2_t temp2 ;
+AND A1_t A2_f temp3 ;
+AND A1_f A2_t temp4 ;
+OR temp1 temp2 O_f ;
+OR temp3 temp4 O_t ;
+;
+XOR3 3
+AND A1_f A2_f temp1 ;
+AND A1_t A2_t temp2 ;
+AND A1_t A2_f temp3 ;
+AND A1_f A2_t temp4 ;
+OR temp1 temp2 temp5 ;
+OR temp3 temp4 temp6 ;
+AND temp5 A3_f temp7 ;
+AND temp6 A3_t temp8 ;
+AND temp6 A3_f temp9 ;
+AND temp5 A3_t temp10 ;
+OR temp7 temp8 O_f ;
+OR temp9 temp10 O_t ;
+;
+XNOR3 3
+AND A1_f A2_f temp1 ;
+AND A1_t A2_t temp2 ;
+AND A1_t A2_f temp3 ;
+AND A1_f A2_t temp4 ;
+OR temp1 temp2 temp5 ;
+OR temp3 temp4 temp6 ;
+AND temp5 A3_f temp7 ;
+AND temp6 A3_t temp8 ;
+AND temp6 A3_f temp9 ;
+AND temp5 A3_t temp10 ;
+OR temp7 temp8 O_t ;
+OR temp9 temp10 O_f ;
+;
+COUT 3
+OR A1_f A2_f temp1 ;
+OR A2_f A3_f temp2 ;
+OR A1_f A3_f temp3 ;
+AND temp1 temp2 temp3 O_t ;
+AND A1_t A2_t temp4 ;
+AND A2_t A3_t temp5 ;
+AND A1_t A3_t temp6 ;
+OR temp4 temp5 temp6 O_t ;
+;
+SUM 3
+AND A1_t A2_f A3_f temp1 ;
+AND A1_f A2_f A3_t temp2 ;
+AND A1_f A2_t A3_f temp3 ;
+AND A1_t A2_t A3_t temp4 ;
+OR A1_f A2_t A3_t temp5 ;
+OR A1_t A2_t A3_f temp6 ;
+OR A1_t A2_f A3_t temp7 ;
+OR A1_f A2_f A3_f temp8 ;
+AND temp5 temp6 temp7 temp8 O_f ;
+OR temp1 temp2 temp3 temp4 O_t ;
+;
