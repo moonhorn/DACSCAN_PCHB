@@ -69,7 +69,7 @@ class PCHBize {
 		int			calculateDepth();
 		void		insertDfT();
 		void		removeExtraINV();
-		
+		void 		countfault();
 		
     private:
 		

@@ -94,6 +94,7 @@ void help_message() {
 	cout << "Usage2:Expansion		   2 <SAF/TDF> <Timeframe_Number> <Enlargement> <MODEL_BASE> <STF_Model> <STR_Model> <library>" << endl;
 	cout << "Usage3:ModNetlist		   3 <SI/NOSI> <SAF/TDF> <Timeframe_Number> <Enlargement> <OrignialFile> <STF_net> <STR_net> <STF_FL> <STR_FL>" << endl;
 	cout << "Usage4:DepthCalculate	   4 <OrignialFile>" << endl;
+	cout << "Usage5:Fault Count        5 <OrignialFile>" << endl;
 	
 	
 }
@@ -253,7 +254,22 @@ int main(int argc, char* argv[])
 		cout << "Depth: " << myPCHB.calculateDepth() << endl;
 		
 	}
-	
+
+	//////////// Mode: Fault //////
+	if(usage == 5){
+		if(argc != 3) {
+			help_message();
+			return 0;
+		}
+		
+		PCHBize myPCHB = readNetlist(argv[2]);
+		myPCHB.insertDfT();
+		myPCHB.removeExtraINV();
+		myPCHB.countfault();
+		//cout << "Depth: " << myPCHB.calculateDepth() << endl;
+		
+	}
+		
 	
 	///////////// Usage Calculation ////////////////
 	tmusg.getPeriodUsage(stat);

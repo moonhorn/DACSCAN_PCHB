@@ -727,10 +727,10 @@ int	PCHBize::calculateDepth(){
 		}
 		if(tempNext.empty()){
 			for(int t = 1; t <= g-1; t++){
-				cout << "Depth " << t << " : ";
+				//cout << "Depth " << t << " : ";
 				for(int i = 0; i < GateList.size(); i++){
 					if(GateList[i].readDepth()==t){
-						cout << GateList[i].readGateName() << ", ";	
+						//cout << GateList[i].readGateName() << ", ";	
 					}
 				}
 				cout << endl;
@@ -743,6 +743,23 @@ int	PCHBize::calculateDepth(){
 		}
 	}
 
+	
+}
+
+void PCHBize::countfault(){
+	cout <<  "Consuming Fault : " << GateList.size()*7 << endl;
+	cout <<  "Generation Fault : " << GateList.size()*10 << endl;
+	int mFaultCount = 0;
+	for(int i = 0; i < GateList.size(); i++){
+		mFaultCount+=GateList[i].readInputLength();
+	}
+	cout <<  "Modification Fault : " << mFaultCount*2 << endl;
+	mFaultCount = 50*GateList.size();
+	for(int i = 0; i < GateList.size(); i++){
+		mFaultCount+=10*GateList[i].readInputLength();
+	}
+	cout <<  "Total Fault : " << mFaultCount << endl;
+	
 	
 }
 
