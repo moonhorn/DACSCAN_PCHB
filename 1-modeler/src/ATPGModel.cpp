@@ -427,7 +427,7 @@ void ModelFormatAnalyzer::printSAFTimeframeModel(string filename) {
 			temp++;
 			fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(";
 			for(int i = 1; i <= timeframe; i++){
-				fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(~E1_TF" << i << "), ";
+				fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(~model" << 5*GateList[j].readFanin()+10 << "_TF" << i << "), ";
 			}
 			fout << ".TIE_VALUE(TIE_VALUE) );" << endl;
 			temp++;
