@@ -607,18 +607,19 @@ void PCHBize::printATPGModel(int option,int Ftype ,int TF, int enLarge, int SI, 
 			fout1 << GateList[i].readGateName() << "(";
 			for(int h = 1; h <= 17+GateList[i].readInputLength()*5; h++){
 				if(GateList[i].readGateType()!=1){
-					if((h<=GateList[i].readInputLength()*2)||(h==GateList[i].readInputLength()*2+3)||(h==GateList[i].readInputLength()*2+4)){ //刪掉LCD
+					//if((h==GateList[i].readInputLength()*2+1)||(h==GateList[i].readInputLength()*2+2)||(h>GateList[i].readInputLength()*2+4)){ //Without datapath
+					//if((h==GateList[i].readInputLength()*2+4)||(h==GateList[i].readInputLength()*2+3)||(h<=GateList[i].readInputLength()*2)){ //Only datapath
 						if(option == 0)
 							fout2 << "sa1  --  " << GateList[i].readGateName() << "/inst_model" << h << "/buffer/Z" << endl;
 						else                        
 							fout2 << "sa0  --  " << GateList[i].readGateName() << "/inst_model" << h << "/buffer/Z" << endl;
-					}
+					//}
 				}
 			}
 			for(int h = 1; h <= TF; h++){	//Connect AckL
 				fout1 <<" .AckL_TF" << h << "(AckL_" << GateList[i].readGateName() << "_TF" << h << "), ";
 				if(h == 1)
-					fout1 << ".AckR_TF1(SI), ";
+					fout1 << ".AckR_TF1(~SI), ";
 				else
 					fout1 << ".AckR_TF" << h << "(AckR_" << GateList[i].readGateName() << "_TF" << h << "_FO" << fanout << "), ";
 				for(int j = 0; j < GateList[i].readInputLength(); j++){
@@ -680,6 +681,8 @@ void PCHBize::printATPGModel(int option,int Ftype ,int TF, int enLarge, int SI, 
 int	PCHBize::calculateDepth(){
 	vector<string> tempNow;
 	vector<string> tempNext;
+	fstream fout1;
+	fout1.open("Depthreport.txt", ios::out);
 	
 	for(int i = GateList.size()-1; i >= 0 ; i--){	//Clear all inverter (Will damage gate tree)
 		if(GateList[i].readGateType() == 1){
@@ -695,6 +698,8 @@ int	PCHBize::calculateDepth(){
 			GateList.erase(GateList.begin()+i);
 		}
 	}
+	
+	//Forward Depth
 	for(int i = 0; i < GateList.size(); i++){	//Clean depth
 		GateList[i].updateDepth(-1);
 	}	
@@ -727,13 +732,62 @@ int	PCHBize::calculateDepth(){
 		}
 		if(tempNext.empty()){
 			for(int t = 1; t <= g-1; t++){
-				//cout << "Depth " << t << " : ";
+				fout1 << "Depth " << t << " : ";
 				for(int i = 0; i < GateList.size(); i++){
 					if(GateList[i].readDepth()==t){
-						//cout << GateList[i].readGateName() << ", ";	
+						fout1 << GateList[i].readGateName() << ", ";	
 					}
 				}
-				cout << endl;
+				fout1 << endl;
+			}
+			//return g-1;
+		}
+		tempNow.clear();
+		for(int k = 0; k < tempNext.size(); k++){
+			tempNow.push_back(tempNext[k]);
+		}
+	}
+	
+	//Backward Depth
+	for(int i = 0; i < GateList.size(); i++){	//Clean depth
+		GateList[i].updateDepth(-1);
+	}	
+	for(int i = 0; i < GateList.size(); i++){	//Define first class
+		for(int k = 0; k < OutputName.size(); k++){
+			if(GateList[i].readOutputName(0).compare(OutputName[k])==0){
+				GateList[i].updateDepth(1);
+				for(int j = 0; j < GateList[i].readInputLength(); j++){
+					tempNow.push_back(GateList[i].readInputName(j));
+				}
+				break;
+				break;
+			}
+		}
+	}
+	
+	for(int g = 2; g < 100; g++){
+		tempNext.clear();
+		for(int i = 0; i < GateList.size(); i++){	//Define first class
+			for(int k = 0; k < tempNow.size(); k++){
+				if(GateList[i].readOutputName(0).compare(tempNow[k])==0){
+					GateList[i].updateDepth(g);
+					for(int j = 0; j < GateList[i].readInputLength(); j++){
+						tempNext.push_back(GateList[i].readInputName(j));
+					}
+					break;
+					break;
+				}
+			}
+		}
+		if(tempNext.empty()){
+			for(int t = 1; t <= g-1; t++){
+				fout1 << "Depth " << t << " : ";
+				for(int i = 0; i < GateList.size(); i++){
+					if(GateList[i].readDepth()==t){
+						fout1 << GateList[i].readGateName() << ", ";	
+					}
+				}
+				fout1 << endl;
 			}
 			return g-1;
 		}
@@ -743,7 +797,6 @@ int	PCHBize::calculateDepth(){
 		}
 	}
 
-	
 }
 
 void PCHBize::countfault(){

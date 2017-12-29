@@ -323,13 +323,13 @@ void ModelFormatAnalyzer::printSAFTimeframeModel(string filename) {
 			temp++;
 		}
 		fout << "//On-Feedback-of-F Fault" << endl;
-		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.TF1(PPI_f), .ZN1(model" << temp << "_TF1), ";
+		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.ZN1(model" << temp << "_TF1), .TF1(PPI_f), ";
 		for(int i = 2; i <= timeframe; i++){
 			fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(ZN_f_TF" << i-1 << "), ";
 		}
 		fout << ".TIE_VALUE(TIE_VALUE) );" << endl;
 		temp++;
-		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.TF1(PPI_t), .ZN1(model" << temp << "_TF1), ";
+		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.ZN1(model" << temp << "_TF1), .TF1(PPI_t), ";
 		for(int i = 2; i <= timeframe; i++){
 			fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(ZN_t_TF" << i-1 << "), ";
 		}
@@ -374,13 +374,13 @@ void ModelFormatAnalyzer::printSAFTimeframeModel(string filename) {
 			temp++;
 		}
 		fout << "//On-RCD Fault" << endl;
-		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.TF1(PPI_f), .ZN1(model" << temp << "_TF1), ";
+		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.ZN1(model" << temp << "_TF1), .TF1(PPI_f), ";
 		for(int i = 2; i <= timeframe; i++){
 			fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(ZN_f_TF" << i-1 << "), ";
 		}
 		fout << ".TIE_VALUE(TIE_VALUE) );" << endl;
 		temp++;
-		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.TF1(PPI_t), .ZN1(model" << temp << "_TF1), ";
+		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.ZN1(model" << temp << "_TF1), .TF1(PPI_t), ";
 		for(int i = 2; i <= timeframe; i++){
 			fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(ZN_t_TF" << i-1 << "), ";
 		}
@@ -399,7 +399,7 @@ void ModelFormatAnalyzer::printSAFTimeframeModel(string filename) {
 		}
 		fout << ".TIE_VALUE(TIE_VALUE) );" << endl;
 		temp++;
-		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.TF1(PPI_c), .ZN1(model" << temp << "_TF1), ";
+		fout << "STUCKAT_FAULT_MODEL inst_model" << temp << "(.ZN1(model" << temp << "_TF1), .TF1(PPI_c), ";
 		for(int i = 2; i <= timeframe; i++){
 			fout << ".ZN" << i << "(model" << temp << "_TF" << i << "), .TF" << i << "(AckL_TF" << i-1 << "), ";
 		}
