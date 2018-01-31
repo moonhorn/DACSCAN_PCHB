@@ -223,4 +223,4 @@ if($STFon !~ "0"){
     }
 }
 
-#`rm tmax_copy3.tcl`;
+`rm tmax_copy3.tcl`;

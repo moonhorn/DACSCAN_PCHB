@@ -1,14 +1,14 @@
 # global variables
-set PATH ../0-result/modNetlist/STF/s1238_PCHB_mod_stf.v
-set DESIGN s1238_PCHB
-set LIBRARY_SIMPLE ../library_delay_expand6/dims_lib_model_delay_stf.v
-set LIBRARY_MODEL ../library_delay_expand6/pchb_lib_model_expand.v
-set FAULT ../0-result/modFaultlist/STF/s1238_PCHB_mod_stf.fl
-set DT ../0-result/tmax/DT/STF/s1238_PCHB_stf.dt
-set PT ../0-result/tmax/PT/STF/s1238_PCHB_stf.pt
-set UD ../0-result/tmax/UD/STF/s1238_PCHB_stf.ud
-set AU ../0-result/tmax/AU/STF/s1238_PCHB_stf.au
-set ND ../0-result/tmax/ND/STF/s1238_PCHB_stf.nd
+set PATH ../0-result/modNetlist/STF/s526_PCHB_mod_stf.v
+set DESIGN s526_PCHB
+set LIBRARY_SIMPLE ../library_delay_expand4/dims_lib_model_delay_stf.v
+set LIBRARY_MODEL ../library_delay_expand4/pchb_lib_model_expand.v
+set FAULT ../0-result/modFaultlist/STF/s526_PCHB_mod_stf.fl
+set DT ../0-result/tmax/DT/STF/s526_PCHB_stf.dt
+set PT ../0-result/tmax/PT/STF/s526_PCHB_stf.pt
+set UD ../0-result/tmax/UD/STF/s526_PCHB_stf.ud
+set AU ../0-result/tmax/AU/STF/s526_PCHB_stf.au
+set ND ../0-result/tmax/ND/STF/s526_PCHB_stf.nd
 set Ndt "1"
 #set cpuNum "8"
 
