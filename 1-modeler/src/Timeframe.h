@@ -70,6 +70,7 @@ class PCHBize {
 		void		insertDfT();
 		void		removeExtraINV();
 		void 		countfault();
+		void 		countGate();
 		
     private:
 		
