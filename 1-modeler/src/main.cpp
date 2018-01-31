@@ -203,8 +203,8 @@ int main(int argc, char* argv[])
 			myanalyzer.printSAFDelayModel(0,argv[7]);	//SA0
 			myanalyzer.printSAFTimeframeModel(argv[8]);
 		}else if(strcmp(argv[2],"TDF")==0) {
-			myanalyzer.printTDFDelayModel(1,atoi(argv[4]),argv[6]);	//STF
-			myanalyzer.printTDFDelayModel(0,atoi(argv[4]),argv[7]);	//STR
+			myanalyzer.printTDFDelayModel(1,atoi(argv[4])*2,argv[6]);	//STF
+			myanalyzer.printTDFDelayModel(0,atoi(argv[4])*2,argv[7]);	//STR
 			myanalyzer.printTDFTimeframeModel(argv[8]);
 		}else{
 			cout << "Please choose SAF or TDF." << endl; 

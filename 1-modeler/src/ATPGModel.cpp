@@ -121,13 +121,26 @@ void ModelFormatAnalyzer::printTDFDelayModel(int type, int step, string filename
 			fout1 << "    assign TIE_VALUE = 1'b0;" << endl;
 	fout1 << endl;
 	fout1 << "    BUF_X1 buffer( .Z(TieModel), .A(TIE_VALUE) );" << endl;
-	int i = 0;
-	for(int k = 1; k < step; k++){
+	int i = 0;	
+	for(int k = 1; k < step-1; k++){
+		for(int l = 1; l < k; l++){
+			if(type == 0)
+				fout1 << "	AND2_X1 g";
+			else
+				fout1 << "	OR2_X1 g";
+			if(l == 1)
+				fout1 << i << "_" << l << " ( .ZN(ModelOutput" << k << "_" << l << "), .A1(TF" << k-step+l+2 << "), .A2(TF" << k-step+l+3 << ") );" << endl;
+			else
+				fout1 << i << "_" << l << " ( .ZN(ModelOutput" << k << "_" << l << "), .A1(ModelOutput" << k << "_" << l-1 << "), .A2(TF" << k-step+l+1 << ") );" << endl;
+		}
 		if(type == 0)
 			fout1 << "	OR2_X1 g";
 		else
 			fout1 << "	AND2_X1 g";
-		fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(TF" << k << ") );" << endl;
+		if(k == 1)
+			fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(TF1) );" << endl;
+		else
+			fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(ModelOutput" << k << "_" << k-1 << ") );" << endl;
 		i++;
 		if(type == 0)
 			fout1 << "	AND2_X1 g";
@@ -136,19 +149,25 @@ void ModelFormatAnalyzer::printTDFDelayModel(int type, int step, string filename
 		fout1 << i << " ( .ZN(ZN" << k << "), .A1(ModelOutput" << k << "), .A2(TF" << k+1 << ") );" << endl;
 		i++;
 	}
-	for(int k = step; k < timeframe; k++){
-		for(int l = 1; l < step; l++){
+	for(int k = step-1 ; k < timeframe; k++){
+		for(int l = 1; l < step-1; l++){
 			if(type == 0)
 				fout1 << "	AND2_X1 g";
 			else
 				fout1 << "	OR2_X1 g";
-			fout1 << i << "_" << l << " ( .ZN(ModelOutput" << k << "_" << l << "), .A1(TF" << k-step+l << "), .A2(TF" << k-step+l+1 << ") );" << endl;	//need check
+			if(l == 1)
+				fout1 << i << "_" << l << " ( .ZN(ModelOutput" << k << "_" << l << "), .A1(TF" << k-step+l+1 << "), .A2(TF" << k-step+l+2 << ") );" << endl;
+			else
+				fout1 << i << "_" << l << " ( .ZN(ModelOutput" << k << "_" << l << "), .A1(ModelOutput" << k << "_" << l-1 << "), .A2(TF" << k-step+l+2 << ") );" << endl;
 		}
 		if(type == 0)
 			fout1 << "	OR2_X1 g";
 		else
 			fout1 << "	AND2_X1 g";
-		fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(ModelOutput" << k << "_" << step-1 << ") );" << endl;
+		if(k == 1)
+			fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(ModelOutput" << k << ") );" << endl;
+		else
+			fout1 << i << " ( .ZN(ModelOutput" << k << "), .A1(TieModel), .A2(ModelOutput" << k << "_" << step-2 << ") );" << endl;
 		i++;
 		if(type == 0)
 			fout1 << "	AND2_X1 g";
@@ -192,6 +211,22 @@ void ModelFormatAnalyzer::printSAFTimeframeModel(string filename) {
 	fout << endl;
 	fout << "  AND3_X1 U1(.ZN(i_1), .A1(A1), .A2(A2), .A3(A3));" << endl;
 	fout << "  OR3_X1 U2(.ZN(i_2), .A1(A1), .A2(A2), .A3(A3));" << endl;
+	fout << "  AND2_X1 U3(.ZN(i_3), .A1(PI), .A2(i_2));" << endl;
+	fout << "  OR2_X1 U4(.ZN(ZN), .A1(i_1), .A2(i_3)); " << endl;
+	fout << endl;
+	fout << "endmodule" << endl;
+	fout << endl;
+	fout << "module CEMT4 (A1, A2, A3, A4, ZN, PI);" << endl;
+	fout << endl;
+	fout << "  input A1;" << endl;
+	fout << "  input A2;" << endl;
+	fout << "  input A3;" << endl;
+	fout << "  input A4;" << endl;
+	fout << "  input PI;" << endl;
+	fout << "  output ZN;" << endl;
+	fout << endl;
+	fout << "  AND4_X1 U1(.ZN(i_1), .A1(A1), .A2(A2), .A3(A3), .A4(A4));" << endl;
+	fout << "  OR4_X1 U2(.ZN(i_2), .A1(A1), .A2(A2), .A3(A3), .A4(A4));" << endl;
 	fout << "  AND2_X1 U3(.ZN(i_3), .A1(PI), .A2(i_2));" << endl;
 	fout << "  OR2_X1 U4(.ZN(ZN), .A1(i_1), .A2(i_3)); " << endl;
 	fout << endl;

@@ -800,6 +800,7 @@ int	PCHBize::calculateDepth(){
 }
 
 void PCHBize::countfault(){
+	/*
 	cout <<  "Consuming Fault : " << GateList.size()*7 << endl;
 	cout <<  "Generation Fault : " << GateList.size()*10 << endl;
 	int mFaultCount = 0;
@@ -812,7 +813,23 @@ void PCHBize::countfault(){
 		mFaultCount+=10*GateList[i].readInputLength();
 	}
 	cout <<  "Total Fault : " << mFaultCount << endl;
-	
+	*/
+	for(int i = GateList.size()-1; i >= 0 ; i--){
+		if(GateList[i].readGateType()==1)
+			GateList.erase(GateList.begin()+i);
+	}
+	cout <<  "Consuming Fault : " << GateList.size()*7 << endl;
+	cout <<  "Generation Fault : " << GateList.size()*4 << endl;
+	int mFaultCount = 0;
+	for(int i = 0; i < GateList.size(); i++){
+		mFaultCount+=GateList[i].readInputLength();
+	}
+	cout <<  "Modification Fault : " << mFaultCount*2 << endl;
+	mFaultCount = 0;
+	for(int i = 0; i < GateList.size(); i++){
+		mFaultCount+=GateList[i].readInputLength();
+	}
+	cout <<  "Total Fault : " << (mFaultCount*5+17*GateList.size())*2 << endl;
 	
 }
 
